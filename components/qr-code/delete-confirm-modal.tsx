@@ -51,7 +51,10 @@ export function DeleteConfirmModal({
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            onClick={onConfirm}
+            onClick={(e) => {
+              e.preventDefault(); // Prevent auto-close
+              onConfirm();
+            }}
             disabled={isLoading}
             className="gradient-primary hover:bg-destructive flex-1 font-heading text-base py-3 h-12"
           >

@@ -83,11 +83,26 @@ export default function Page() {
 
   // Handle delete
   const handleDelete = async () => {
-    if (!state.selectedQRId) return;
-    const success = await deleteQR(state.selectedQRId);
-    if (success) {
+    console.log("🗑️ handleDelete called");
+    console.log("Selected QR ID:", state.selectedQRId);
+
+    if (!state.selectedQRId) {
+      console.warn("No QR ID selected, aborting delete");
+      return;
+    }
+
+    try {
+      console.log("🚀 Calling deleteQR with ID:", state.selectedQRId);
+      const result = await deleteQR(state.selectedQRId);
+      console.log("✅ Delete successful, result:", result);
+
+      // Success - mutation already shows toast and updates cache
       state.setIsDeleteModalOpen(false);
       state.setSelectedQRId(null);
+    } catch (error) {
+      // Error - mutation already shows error toast and rolls back
+      // Keep modal open so user can try again or cancel
+      console.error("❌ Delete failed:", error);
     }
   };
 
@@ -370,8 +385,6 @@ export default function Page() {
         isOpen={isSuccessModalOpen}
         onClose={() => {
           setIsSuccessModalOpen(false);
-          // Refresh the list
-          window.location.reload();
         }}
         onAddAnother={() => {
           setIsSuccessModalOpen(false);

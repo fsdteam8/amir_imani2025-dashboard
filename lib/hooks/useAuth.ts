@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import useSWR, { mutate } from "swr";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { authService } from "@/lib/api/auth-service";
+import { queryKeys } from "@/lib/query-keys";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import type {
   LoginInput,
   RegisterInput,
@@ -18,21 +19,21 @@ import type {
 // useCurrentUser Hook
 // --------------------
 export function useCurrentUser() {
-  const { data, error, isLoading, mutate: mutateUser } = useSWR<{ data: User }>(
-    "/auth/me",
-    () => authService.getMe(),
-    {
-      shouldRetryOnError: false,
-      revalidateOnFocus: false,
-    }
-  );
+  const queryResult = useQuery({
+    queryKey: queryKeys.auth.currentUser(),
+    queryFn: () => authService.getMe(),
+    retry: false,
+    // Only fetch if we have a token
+    enabled:
+      typeof window !== "undefined" && !!localStorage.getItem("authToken"),
+  });
 
   return {
-    user: data?.data,
-    isLoading,
-    isError: !!error,
-    error,
-    mutateUser,
+    user: queryResult.data?.data,
+    isLoading: queryResult.isLoading,
+    isError: queryResult.isError,
+    error: queryResult.error,
+    refetch: queryResult.refetch,
   };
 }
 
@@ -41,125 +42,210 @@ export function useCurrentUser() {
 // --------------------
 export const useAuth = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  const login = async (input: LoginInput) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await authService.login(input);
+  // Login mutation
+  const loginMutation = useMutation({
+    mutationFn: (input: LoginInput) => authService.login(input),
+    onMutate: () => {
+      toast.loading("Logging in...", { id: "auth-login" });
+    },
+    onSuccess: async (res) => {
       if (res.data?.accessToken) {
         localStorage.setItem("authToken", res.data.accessToken);
-        // Mutate the user query to fetch the new user immediately
-        await mutate("/auth/me");
-        router.push("/dashboard"); // or wherever
-      }
-      return res;
-    } catch (err: any) {
-      setError(err.message || "Login failed");
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
-  const register = async (input: RegisterInput) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await authService.register(input);
-      if (res.data?.accessToken) {
-        localStorage.setItem("authToken", res.data.accessToken);
-        await mutate("/auth/me");
+        // Invalidate and refetch user data
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.auth.currentUser(),
+        });
+
+        toast.success("Login successful!", { id: "auth-login" });
         router.push("/dashboard");
       }
-      return res;
-    } catch (err: any) {
-      setError(err.message || "Registration failed");
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    onError: (err: any) => {
+      const message =
+        err.response?.data?.message || err.message || "Login failed";
+      toast.error(message, { id: "auth-login" });
+    },
+  });
 
-  const verifyOtp = async (input: VerifyOtpInput) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await authService.verifyOtp(input);
+  // Register mutation
+  const registerMutation = useMutation({
+    mutationFn: (input: RegisterInput) => authService.register(input),
+    onMutate: () => {
+      toast.loading("Creating account...", { id: "auth-register" });
+    },
+    onSuccess: async (res) => {
       if (res.data?.accessToken) {
         localStorage.setItem("authToken", res.data.accessToken);
-        await mutate("/auth/me");
+
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.auth.currentUser(),
+        });
+
+        toast.success("Account created successfully!", { id: "auth-register" });
         router.push("/dashboard");
       }
-      return res;
-    } catch (err: any) {
-      setError(err.message || "OTP verification failed");
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    onError: (err: any) => {
+      const message =
+        err.response?.data?.message || err.message || "Registration failed";
+      toast.error(message, { id: "auth-register" });
+    },
+  });
 
-  const forgotPassword = async (input: ForgotPasswordInput) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await authService.forgotPassword(input);
-      return res;
-    } catch (err: any) {
-      setError(err.message || "Failed to send reset email");
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Verify OTP mutation
+  const verifyOtpMutation = useMutation({
+    mutationFn: (input: VerifyOtpInput) => authService.verifyOtp(input),
+    onMutate: () => {
+      toast.loading("Verifying OTP...", { id: "auth-verify-otp" });
+    },
+    onSuccess: async (res) => {
+      if (res.data?.accessToken) {
+        localStorage.setItem("authToken", res.data.accessToken);
 
-  const resetPassword = async (token: string, input: ResetPasswordInput) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await authService.resetPassword(token, input);
-      return res;
-    } catch (err: any) {
-      setError(err.message || "Password reset failed");
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        await queryClient.invalidateQueries({
+          queryKey: queryKeys.auth.currentUser(),
+        });
 
-  const changePassword = async (input: ChangePasswordInput) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await authService.changePassword(input);
-      return res;
-    } catch (err: any) {
-      setError(err.message || "Password change failed");
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        toast.success("OTP verified successfully!", { id: "auth-verify-otp" });
+        router.push("/dashboard");
+      }
+    },
+    onError: (err: any) => {
+      const message =
+        err.response?.data?.message || err.message || "OTP verification failed";
+      toast.error(message, { id: "auth-verify-otp" });
+    },
+  });
 
+  // Forgot password mutation
+  const forgotPasswordMutation = useMutation({
+    mutationFn: (input: ForgotPasswordInput) =>
+      authService.forgotPassword(input),
+    onMutate: () => {
+      toast.loading("Sending reset email...", { id: "auth-forgot-password" });
+    },
+    onSuccess: () => {
+      toast.success("Reset email sent! Check your inbox.", {
+        id: "auth-forgot-password",
+      });
+    },
+    onError: (err: any) => {
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to send reset email";
+      toast.error(message, { id: "auth-forgot-password" });
+    },
+  });
+
+  // Reset password mutation
+  const resetPasswordMutation = useMutation({
+    mutationFn: ({
+      token,
+      input,
+    }: {
+      token: string;
+      input: ResetPasswordInput;
+    }) => authService.resetPassword(token, input),
+    onMutate: () => {
+      toast.loading("Resetting password...", { id: "auth-reset-password" });
+    },
+    onSuccess: () => {
+      toast.success("Password reset successfully!", {
+        id: "auth-reset-password",
+      });
+      router.push("/login");
+    },
+    onError: (err: any) => {
+      const message =
+        err.response?.data?.message || err.message || "Password reset failed";
+      toast.error(message, { id: "auth-reset-password" });
+    },
+  });
+
+  // Change password mutation
+  const changePasswordMutation = useMutation({
+    mutationFn: (input: ChangePasswordInput) =>
+      authService.changePassword(input),
+    onMutate: () => {
+      toast.loading("Changing password...", { id: "auth-change-password" });
+    },
+    onSuccess: () => {
+      toast.success("Password changed successfully!", {
+        id: "auth-change-password",
+      });
+    },
+    onError: (err: any) => {
+      const message =
+        err.response?.data?.message || err.message || "Password change failed";
+      toast.error(message, { id: "auth-change-password" });
+    },
+  });
+
+  // Logout function
   const logout = () => {
     localStorage.removeItem("authToken");
-    mutate("/auth/me", null, false); // Clear user data
+
+    // Clear all auth-related queries
+    queryClient.removeQueries({ queryKey: queryKeys.auth.all });
+
+    toast.success("Logged out successfully");
     router.push("/login");
   };
 
   return {
-    login,
-    register,
-    verifyOtp,
-    forgotPassword,
-    resetPassword,
-    changePassword,
+    // Async methods (return promises)
+    login: loginMutation.mutateAsync,
+    register: registerMutation.mutateAsync,
+    verifyOtp: verifyOtpMutation.mutateAsync,
+    forgotPassword: forgotPasswordMutation.mutateAsync,
+    resetPassword: ({
+      token,
+      input,
+    }: {
+      token: string;
+      input: ResetPasswordInput;
+    }) => resetPasswordMutation.mutateAsync({ token, input }),
+    changePassword: changePasswordMutation.mutateAsync,
+
+    // Sync methods (fire and forget)
+    loginSync: loginMutation.mutate,
+    registerSync: registerMutation.mutate,
+    verifyOtpSync: verifyOtpMutation.mutate,
+    forgotPasswordSync: forgotPasswordMutation.mutate,
+    resetPasswordSync: resetPasswordMutation.mutate,
+    changePasswordSync: changePasswordMutation.mutate,
+
+    // Logout
     logout,
-    isLoading,
-    error,
+
+    // Loading states
+    isLoading:
+      loginMutation.isPending ||
+      registerMutation.isPending ||
+      verifyOtpMutation.isPending ||
+      forgotPasswordMutation.isPending ||
+      resetPasswordMutation.isPending ||
+      changePasswordMutation.isPending,
+
+    isLoginLoading: loginMutation.isPending,
+    isRegisterLoading: registerMutation.isPending,
+    isVerifyOtpLoading: verifyOtpMutation.isPending,
+    isForgotPasswordLoading: forgotPasswordMutation.isPending,
+    isResetPasswordLoading: resetPasswordMutation.isPending,
+    isChangePasswordLoading: changePasswordMutation.isPending,
+
+    // Error states
+    error:
+      loginMutation.error ||
+      registerMutation.error ||
+      verifyOtpMutation.error ||
+      forgotPasswordMutation.error ||
+      resetPasswordMutation.error ||
+      changePasswordMutation.error,
   };
 };
 
@@ -167,34 +253,19 @@ export const useAuth = () => {
 // useAllUsers Hook
 // --------------------
 export const useAllUsers = () => {
-  const { data, error, isLoading, mutate: mutateUsers } = useSWR<{ data: User[] }>(
-    "/users",
-    () => authService.getAllUsers()
-  );
+  const queryResult = useQuery({
+    queryKey: queryKeys.auth.users(),
+    queryFn: () => authService.getAllUsers(),
+    // Only fetch if authenticated
+    enabled:
+      typeof window !== "undefined" && !!localStorage.getItem("authToken"),
+  });
 
   return {
-    users: data?.data || [],
-    isLoading,
-    isError: !!error,
-    error,
-    mutateUsers,
+    users: queryResult.data?.data || [],
+    isLoading: queryResult.isLoading,
+    isError: queryResult.isError,
+    error: queryResult.error,
+    refetch: queryResult.refetch,
   };
 };
-
-// --------------------
-// useAllConversation Hook
-// --------------------
-// export const useAllConversation = (userId: string) => {
-//   const { data, error, isLoading, mutate: mutateConversations } = useSWR<{ data: any[] }>(
-//     userId ? `/conversations/${userId}` : null,
-//     () => authService.getUserConversation(userId)
-//   );
-
-//   return {
-//     conversations: data?.data || [],
-//     isLoading,
-//     isError: !!error,
-//     error,
-//     mutateConversations,
-//   };
-// };

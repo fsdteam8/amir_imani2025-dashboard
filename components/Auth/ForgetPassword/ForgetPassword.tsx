@@ -26,7 +26,7 @@ const forgotSchema = z.object({
 type ForgotFormValues = z.infer<typeof forgotSchema>;
 
 export default function ForgetPassword() {
-  const { forgotPassword } = useAuth();
+  const { forgotPassword, isForgotPasswordLoading } = useAuth();
   const form = useForm<ForgotFormValues>({
     resolver: zodResolver(forgotSchema),
     defaultValues: {
@@ -46,15 +46,13 @@ export default function ForgetPassword() {
       }
 
       const token = res?.data?.accessToken;
-      // console.log(token);
       if (token) {
-        // redirect(`/verify-otp?token=${token}`);
         router.push(`/verify-otp?token=${token}&mode=forgot`);
       } else {
         toast.error("Token not received, please try again");
       }
     } catch {
-      toast.error("Failed to send OTP. Try again");
+      // Error already handled by the hook
     }
   };
 
@@ -95,8 +93,9 @@ export default function ForgetPassword() {
           <Button
             type="submit"
             className="w-full h-10 gradient-primary hover:bg-red-800 cursor-pointer"
+            disabled={isForgotPasswordLoading}
           >
-            Send OTP
+            {isForgotPasswordLoading ? "Sending OTP..." : "Send OTP"}
           </Button>
         </form>
       </Form>
