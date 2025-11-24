@@ -69,7 +69,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-[756px] border p-8 rounded-lg shadow-lg bg-white">
+    <div className="w-full max-w-[756px] border p-8 rounded-lg shadow-lg bg-white">
       <h2 className="text-3xl md:text-[40px] font-bold leading-[150%] font-playfair text-center mb-2 font-heading">
         Welcome
       </h2>

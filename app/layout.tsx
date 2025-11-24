@@ -1,44 +1,45 @@
-import type { Metadata } from 'next'
-import { Poppins, Goldman } from 'next/font/google'
-import { Toaster } from '@/components/ui/sonner'
-import { QueryProvider } from '@/components/providers/query-provider'
-import './globals.css'
+import type { Metadata } from "next";
+import { Poppins, Goldman } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import { QueryProvider } from "@/components/providers/query-provider";
+import "./globals.css";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 const goldman = Goldman({
-  subsets: ['latin'],
-  weight: ['400', '700'],
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
-  title: 'QR Code Dashboard',
-  description: 'Manage your game QR codes and links',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
-}
+  title: "DOUNDO | Admin Dashboard",
+  description: "Manage your game QR codes and links",
+  icons: "/assets/amir_imani-logo.svg",
+  // {
+  //   icon: [
+  //     {
+  //       url: "/assets/amir_imani-logo.svg",
+  //       media: "(prefers-color-scheme: light)",
+  //     },
+  //     {
+  //       url: '/icon-dark-32x32.png',
+  //       media: '(prefers-color-scheme: dark)',
+  //     },
+  //     {
+  //       url: '/icon.svg',
+  //       type: 'image/svg+xml',
+  //     },
+  //   ],
+  //   apple: '/apple-icon.png',
+  // },
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -49,5 +50,5 @@ export default function RootLayout({
         </QueryProvider>
       </body>
     </html>
-  )
+  );
 }

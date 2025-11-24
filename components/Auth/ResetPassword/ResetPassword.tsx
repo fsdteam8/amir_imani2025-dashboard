@@ -72,7 +72,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center w-[756px] shadow-lg rounded-lg p-6">
+    <div className="flex items-center justify-center w-full max-w-[756px] shadow-lg rounded-lg p-6">
       <div className="w-full">
         {/* Header */}
         <h2 className="text-3xl md:text-[40px] font-playfair font-bold text-primary mb-2 font-heading">

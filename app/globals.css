@@ -1,86 +1,105 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-heading: "Goldman", sans-serif;
   --font-paragraph: "Poppins", sans-serif;
-  --base-color: #6366F1;
+  --base-color: #f04d2a;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  /* Update primary to gradient colors from indigo to purple */
-  --primary:linear-gradient(90deg, #6366F1 0%, #A78BFA 100%);
-  --primary-light: #A78BFA;
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  /* White - Main Background, Text on dark backgrounds */
+  --background: #ffffff;
+  /* Cosmic Navy - Secondary Background, Text throughout website */
+  --foreground: #0e1d2b;
+  /* Earthy Beige - Secondary Backgrounds, Card Backgrounds */
+  --card: #f2e3c6;
+  --card-foreground: #0e1d2b;
+  --popover: #ffffff;
+  --popover-foreground: #0e1d2b;
+  /* Fiery Orange - CTA Buttons, Accents, Highlights */
+  --primary: #f04d2a;
+  --primary-light: #f04d2a;
+  --primary-foreground: #ffffff;
+  /* Teal Blue - Primary Backgrounds or Navigation Bars */
+  --secondary: #4296a2;
+  --secondary-foreground: #ffffff;
+  /* Earthy Beige - Muted backgrounds */
+  --muted: #f2e3c6;
+  --muted-foreground: #0e1d2b;
+  /* Mystic Gold - Accents */
+  --accent: #d4a13d;
+  --accent-foreground: #0e1d2b;
+  --destructive: #f04d2a;
+  --destructive-foreground: #ffffff;
+  /* Mystic Gold - Borders, Dividers */
+  --border: #d4a13d;
+  --input: #d4a13d;
+  --ring: #f04d2a;
+  /* Chart colors using the palette */
+  --chart-1: #f04d2a;
+  --chart-2: #4296a2;
+  --chart-3: #d4a13d;
+  --chart-4: #0e1d2b;
+  --chart-5: #f2e3c6;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Teal Blue - Sidebar backgrounds */
+  --sidebar: #4296a2;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #f04d2a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #d4a13d;
+  --sidebar-accent-foreground: #0e1d2b;
+  --sidebar-border: #d4a13d;
+  --sidebar-ring: #f04d2a;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-light: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  /* Cosmic Navy - Main Background in dark mode */
+  --background: #0e1d2b;
+  /* White - Text in dark mode */
+  --foreground: #ffffff;
+  /* Darker shade for cards in dark mode */
+  --card: #1a2a3a;
+  --card-foreground: #ffffff;
+  --popover: #1a2a3a;
+  --popover-foreground: #ffffff;
+  /* Fiery Orange - Primary remains the same */
+  --primary: #f04d2a;
+  --primary-light: #f04d2a;
+  --primary-foreground: #ffffff;
+  /* Teal Blue - Secondary remains the same */
+  --secondary: #4296a2;
+  --secondary-foreground: #ffffff;
+  /* Darker muted for dark mode */
+  --muted: #1a2a3a;
+  --muted-foreground: #f2e3c6;
+  /* Mystic Gold - Accent remains the same */
+  --accent: #d4a13d;
+  --accent-foreground: #0e1d2b;
+  --destructive: #f04d2a;
+  --destructive-foreground: #ffffff;
+  /* Mystic Gold - Borders */
+  --border: #d4a13d;
+  --input: #d4a13d;
+  --ring: #f04d2a;
+  /* Chart colors using the palette */
+  --chart-1: #f04d2a;
+  --chart-2: #4296a2;
+  --chart-3: #d4a13d;
+  --chart-4: #f2e3c6;
+  --chart-5: #ffffff;
+  /* Teal Blue - Sidebar */
+  --sidebar: #4296a2;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #f04d2a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #d4a13d;
+  --sidebar-accent-foreground: #0e1d2b;
+  --sidebar-border: #d4a13d;
+  --sidebar-ring: #f04d2a;
 }
 
 @theme inline {
@@ -124,8 +143,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -138,6 +155,6 @@
 /* Add gradient utility class for primary gradient */
 @layer components {
   .gradient-primary {
-    background: linear-gradient(90deg, #6366F1 0%, #A78BFA 100%);
+    background: linear-gradient(90deg, #f04d2a 0%, #d4a13d 100%);
   }
 }

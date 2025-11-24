@@ -1,21 +1,25 @@
-import { Input } from '@/components/ui/input'
-import { Search } from 'lucide-react'
-import { useDebounce } from '@/lib/hooks/use-debounce'
-import { useEffect, useState } from 'react'
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { useDebounce } from "@/lib/hooks/use-debounce";
+import { useEffect, useState } from "react";
 
 interface SearchBarProps {
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
 }
 
-export function SearchBar({ value, onChange, placeholder = 'Search QR codes...' }: SearchBarProps) {
-  const [inputValue, setInputValue] = useState(value)
-  const debouncedValue = useDebounce(inputValue, 500)
+export function SearchBar({
+  value,
+  onChange,
+  placeholder = "Search QR codes...",
+}: SearchBarProps) {
+  const [inputValue, setInputValue] = useState(value);
+  const debouncedValue = useDebounce(inputValue, 500);
 
   useEffect(() => {
-    onChange(debouncedValue)
-  }, [debouncedValue, onChange])
+    onChange(debouncedValue);
+  }, [debouncedValue, onChange]);
 
   return (
     <div className="relative">
@@ -24,8 +28,8 @@ export function SearchBar({ value, onChange, placeholder = 'Search QR codes...' 
         placeholder={placeholder}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className="pl-10 focus:ring-indigo-500 focus:border-indigo-500"
+        className="pl-10 focus:ring-[#F04D2A] focus:border-[#F04D2A]"
       />
     </div>
-  )
+  );
 }

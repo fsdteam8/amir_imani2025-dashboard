@@ -80,7 +80,7 @@ export function QRCodeForm({
         <Button
           type="submit"
           disabled={isLoading}
-          className="flex-1 gradient-primary text-white hover:shadow-lg hover:shadow-purple-400/30 transition-shadow font-heading text-base"
+          className="flex-1 gradient-primary text-white hover:shadow-lg hover:shadow-[#F04D2A]/30 transition-shadow font-heading text-base"
         >
           {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
           {qrCode ? "Update QR Code" : "Generate QR Code"}

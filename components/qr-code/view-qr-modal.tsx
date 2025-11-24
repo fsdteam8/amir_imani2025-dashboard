@@ -22,7 +22,7 @@ export function ViewQRModal({ qrCode, isOpen, onClose }: ViewQRModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md bg-card">
         <DialogHeader className="pb-10">
           <div>
             <DialogTitle className="font-heading text-[32px]">
@@ -58,7 +58,7 @@ export function ViewQRModal({ qrCode, isOpen, onClose }: ViewQRModalProps) {
               href={qrCode.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline text-sm mt-1 text-[#6366F1]"
+              className="hover:underline text-sm mt-1 text-primary"
             >
               {qrCode.link}
             </a>

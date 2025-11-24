@@ -8,15 +8,15 @@ interface SidebarProps {
 
 export function Sidebar({ onLogout }: SidebarProps) {
   return (
-    <aside className="w-[312px] bg-[#E1E2FC66] text-white flex flex-col h-screen border-r border-purple-300/20">
+    <aside className="hidden md:flex w-[312px] bg-[#F2E3C6] text-white flex-col h-screen border-r border-[#D4A13D]/20">
       {/* Logo section with brand logo */}
-      <div className="p-6 flex items-center justify-center gap-3 border-b border-purple-300/20 w-full">
+      <div className="p-6 flex items-center justify-center gap-3 border-b border-[#D4A13D]/20 w-full">
         <Image
           src="/assets/amir_imani-logo.svg"
           alt="Ultra Prestigious Winner Logo"
           width={158}
           height={100}
-          className="w-[158px] h-[100px]"
+          className="w-[258px] h-[100px]"
         />
         {/* <span className="font-semibold text-sm">QR Codes</span> */}
       </div>
@@ -45,7 +45,7 @@ export function Sidebar({ onLogout }: SidebarProps) {
         </div>
       </nav>
 
-      <div className="p-6 border-t border-purple-300/20">
+      <div className="p-6 border-t border-[#D4A13D]/20">
         <Button
           variant="outline"
           size="sm"

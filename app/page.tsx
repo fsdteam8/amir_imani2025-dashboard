@@ -9,10 +9,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Sidebar } from "@/components/qr-code/sidebar";
+import { MobileSidebar } from "@/components/qr-code/mobile-sidebar";
 import { QRCodeTable } from "@/components/qr-code/qr-code-table";
 import { QRCodeGrid } from "@/components/qr-code/qr-code-grid";
 import { SearchBar } from "@/components/qr-code/search-bar";
-import { StatusFilter } from "@/components/qr-code/status-filter";
 import { QRCodeForm } from "@/components/qr-code/qr-code-form";
 import { ViewQRModal } from "@/components/qr-code/view-qr-modal";
 import { DeleteConfirmModal } from "@/components/qr-code/delete-confirm-modal";
@@ -25,7 +25,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { CloudCog, Layout, LayoutGrid } from "lucide-react";
+import { Layout, LayoutGrid } from "lucide-react";
 import { useQRCodes } from "@/lib/hooks/use-qr-codes";
 import { useCreateQRCode } from "@/lib/hooks/use-create-qr-code";
 import { useUpdateQRCode } from "@/lib/hooks/use-update-qr-code";
@@ -164,14 +164,20 @@ export default function Page() {
           signOut({ callbackUrl: "/login" });
         }}
       />
+      <MobileSidebar
+        onLogout={() => {
+          localStorage.removeItem("authToken");
+          signOut({ callbackUrl: "/login" });
+        }}
+      />
 
       {/* Main Content */}
       <main className="flex-1 overflow-hidden flex flex-col">
         {/* Header */}
         <header className="border-b bg-card p-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
             <div>
-              <h1 className="text-3xl font-bold bg-linear-to-r from-indigo-600 to-purple-500 bg-clip-text text-transparent font-heading">
+              <h1 className="text-3xl font-bold bg-linear-to-r from-[#F04D2A] to-[#D4A13D] bg-clip-text text-transparent font-heading">
                 QR Code Dashboard
               </h1>
               <p className="text-muted-foreground ">
@@ -183,14 +189,14 @@ export default function Page() {
                 setEditingQRCode(null);
                 setIsCreateModalOpen(true);
               }}
-              className="gradient-primary text-white hover:shadow-lg hover:shadow-purple-400/30 transition-shadow font-heading"
+              className="gradient-primary text-white hover:shadow-lg hover:shadow-[#F04D2A]/30 transition-shadow font-heading"
             >
               Add New QR
             </Button>
           </div>
 
           {/* Filters and Search */}
-          <div className="flex gap-4 items-center">
+          <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
             <div className="flex-1">
               <SearchBar value={state.search} onChange={state.setSearch} />
             </div>
@@ -200,14 +206,14 @@ export default function Page() {
             }} /> */}
 
             {/* View Toggle */}
-            <div className="flex gap-2 bg-muted p-1 rounded-lg">
+            <div className="flex gap-2 bg-muted p-1 rounded-lg border">
               <Button
                 variant={state.viewMode === "list" ? "default" : "ghost"}
                 size="sm"
                 onClick={() => state.setViewMode("list")}
                 className={
                   state.viewMode === "list"
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-500 text-white"
+                    ? "bg-linear-to-r from-[#F04D2A] to-[#D4A13D] text-white"
                     : ""
                 }
               >
@@ -219,7 +225,7 @@ export default function Page() {
                 onClick={() => state.setViewMode("grid")}
                 className={
                   state.viewMode === "grid"
-                    ? "bg-linear-to-r from-indigo-600 to-purple-500 text-white"
+                    ? "bg-linear-to-r from-[#F04D2A] to-[#D4A13D] text-white"
                     : ""
                 }
               >
@@ -312,13 +318,13 @@ export default function Page() {
         open={isCreateModalOpen}
         onOpenChange={handleCreateModalClose}
       >
-        <DialogContent className="!max-w-4xl max-h-[90vh] overflow-auto">
+        <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-auto bg-card">
           <DialogHeader>
-            <DialogTitle className="text-[#6366F1] text-4xl font-heading pb-10">
+            <DialogTitle className="text-primary text-4xl font-heading pb-10">
               {editingQRCode ? "Update QR Code" : "Create New QR Code"}
             </DialogTitle>
           </DialogHeader>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="">
               <div className="pb-10">
                 <h3 className="font-semibold font-heading text-[28px] ">

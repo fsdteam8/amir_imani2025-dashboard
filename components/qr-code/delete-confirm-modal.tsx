@@ -25,7 +25,7 @@ export function DeleteConfirmModal({
 }: DeleteConfirmModalProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
-      <AlertDialogContent className="w-[700px]! p-10">
+      <AlertDialogContent className="w-[700px]! p-10 bg-card">
         <AlertDialogHeader className="pb-10">
           <AlertDialogTitle className="space-y-10">
             <Image
