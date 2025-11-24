@@ -22,7 +22,7 @@ export function MobileSidebar({ onLogout }: MobileSidebarProps) {
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40 z-50" />
-        <Drawer.Content className="h-full w-[300px] bg-[#4296A2] text-white flex flex-col border-r border-[#D4A13D]/20 fixed left-0 top-0 bottom-0 z-50 focus:outline-none">
+        <Drawer.Content className="h-full w-[300px] bg-card text-white flex flex-col border-r border-[#D4A13D]/20 fixed left-0 top-0 bottom-0 z-50 focus:outline-none">
           {/* Logo section with brand logo */}
           <div className="p-6 flex items-center justify-center gap-3 border-b border-[#D4A13D]/20 w-full">
             <Image  

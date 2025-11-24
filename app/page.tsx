@@ -130,16 +130,58 @@ export default function Page() {
     state.setIsDeleteModalOpen(true);
   };
 
-  // Handle download QR code
+  // Handle download QR code - High resolution for printing
   const handleDownload = (id: string) => {
     const qr = qrCodes.find((q) => q._id === id);
     if (qr?.qrCode) {
-      const link = document.createElement("a");
-      link.href = qr.qrCode;
-      link.download = `${qr.gameName}-qr-code.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Create an image element to load the QR code
+      const img = document.createElement("img");
+      img.crossOrigin = "anonymous"; // Handle CORS if needed
+
+      img.onload = () => {
+        // Create a canvas with high resolution (2048x2048 for printing)
+        const canvas = document.createElement("canvas");
+        const size = 2048; // High resolution for printing
+        canvas.width = size;
+        canvas.height = size;
+
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          // Fill with white background
+          ctx.fillStyle = "white";
+          ctx.fillRect(0, 0, size, size);
+
+          // Draw the QR code scaled up
+          ctx.imageSmoothingEnabled = false; // Keep sharp edges for QR code
+          ctx.drawImage(img, 0, 0, size, size);
+
+          // Convert canvas to blob and download
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = `${qr.gameName}-qr-code-print.png`;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+            }
+          }, "image/png");
+        }
+      };
+
+      img.onerror = () => {
+        // Fallback to direct download if image loading fails
+        const link = document.createElement("a");
+        link.href = qr.qrCode;
+        link.download = `${qr.gameName}-qr-code.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
+      img.src = qr.qrCode;
     }
   };
 
@@ -236,7 +278,7 @@ export default function Page() {
         </header>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto md:p-6 pt-2">
           {state.viewMode === "list" ? (
             <QRCodeTable
               qrCodes={qrCodes}
