@@ -86,27 +86,27 @@ export function QRCodeTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {qrCodes.map((qr, idx) => (
+          {qrCodes?.map((qr, idx) => (
             <TableRow
-              key={qr._id}
+              key={qr?._id}
               className={` ${idx % 2 !== 0 ? "bg-[#F2E3C6]/40" : ""}`}
             >
-              <TableCell className="font-medium">{qr.gameName}</TableCell>
+              <TableCell className="font-medium">{qr?.gameName}</TableCell>
               <TableCell>
                 <Link
-                  href={qr.link}
+                  href={qr?.finalUrl || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary cursor-pointer hover:underline text-sm truncate max-w-xs "
                 >
-                  {qr.link}
+                  {qr?.finalUrl || "No link"}
                 </Link>
               </TableCell>
               <TableCell>
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => onView(qr._id)}
+                  onClick={() => onView(qr?._id)}
                   className="text-primary cursor-pointer"
                 >
                   <Eye className="h-4 w-4" />

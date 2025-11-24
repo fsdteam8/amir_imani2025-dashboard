@@ -67,12 +67,12 @@ export function QRCodeGrid({
             <div className="flex-1 min-w-0 items-center justify-center text-center">
               <h3 className="font-semibold truncate">{qr.gameName}</h3>
               <a
-                href={qr.link}
+                href={qr.finalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline truncate block text-(--base-color)"
               >
-                {qr.link}
+                {qr.finalUrl}
               </a>
             </div>
 

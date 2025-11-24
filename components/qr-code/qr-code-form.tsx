@@ -26,18 +26,18 @@ export function QRCodeForm({
   useEffect(() => {
     if (qrCode) {
       setGameName(qrCode.gameName);
-      setGameLink(qrCode.link);
+      setGameLink(qrCode.finalUrl);
     } else {
       setGameName("");
       setGameLink("");
     }
-  }, [qrCode?._id, qrCode?.gameName, qrCode?.link]);
+  }, [qrCode?._id, qrCode?.gameName, qrCode?.finalUrl]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit({
       gameName,
-      link: gameLink,
+      finalUrl: gameLink,
     });
   };
 

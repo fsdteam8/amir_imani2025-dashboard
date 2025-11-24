@@ -55,12 +55,12 @@ export function ViewQRModal({ qrCode, isOpen, onClose }: ViewQRModalProps) {
           <div className="space-y-2">
             <p className="text-base font-medium">Game Link</p>
             <a
-              href={qrCode.link}
+              href={qrCode.finalUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline text-sm mt-1 text-primary"
             >
-              {qrCode.link}
+              {qrCode.finalUrl}
             </a>
           </div>
 

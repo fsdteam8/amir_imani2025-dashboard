@@ -1,7 +1,7 @@
 export interface QRCode {
   _id: string;
   gameName: string;
-  link: string;
+  finalUrl: string;
   qrCode: string; // Base64 or URL to QR code image
   // status: 'Active' | 'Inactive'
   // linkStatus: 'active' | 'inactive'
@@ -11,13 +11,13 @@ export interface QRCode {
 
 export interface CreateQRCodeInput {
   gameName: string;
-  link: string;
+  finalUrl: string;
   // linkStatus: 'active' | 'inactive'
 }
 
 export interface UpdateQRCodeInput {
   gameName: string;
-  link: string;
+  finalUrl: string;
   // linkStatus: 'active' | 'inactive'
 }
 
