@@ -75,7 +75,7 @@ export function QRCodeTable({
     <div className="w-full overflow-x-auto">
       <Table>
         <TableHeader
-          className={`text-primary text-center bg-[#F2E3C6]/40 font-heading`}
+          className={`text-primary text-2xl text-center bg-[#F2E3C6]/40 font-heading`}
         >
           <TableRow>
             <SortableHeader field="gameName" label="Game Name" />
@@ -89,7 +89,7 @@ export function QRCodeTable({
           {qrCodes?.map((qr, idx) => (
             <TableRow
               key={qr?._id}
-              className={` ${idx % 2 !== 0 ? "bg-[#F2E3C6]/40" : ""}`}
+              className={` ${idx % 2 !== 0 ? "bg-[#e0e0e0]/40" : "bg-white"}`}
             >
               <TableCell className="font-medium">{qr?.gameName}</TableCell>
               <TableCell>

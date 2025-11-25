@@ -79,7 +79,10 @@ export function ViewQRModal({ qrCode, isOpen, onClose }: ViewQRModalProps) {
             )}
           </div>
 
-          <Button onClick={onClose} className="w-full">
+          <Button
+            onClick={onClose}
+            className="w-full bg-foreground hover:bg-foreground/80"
+          >
             Close
           </Button>
         </div>

@@ -56,7 +56,7 @@ export function DeleteConfirmModal({
               onConfirm();
             }}
             disabled={isLoading}
-            className="gradient-primary hover:bg-destructive flex-1 font-heading text-base py-3 h-12"
+            className="bg-foreground hover:bg-destructive flex-1 font-heading text-base py-3 h-12"
           >
             {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
             Delete

@@ -216,7 +216,7 @@ export default function Page() {
       {/* Main Content */}
       <main className="flex-1 overflow-hidden flex flex-col">
         {/* Header */}
-        <header className="border-b bg-card p-6">
+        <header className="border-b bg-[#eeeeee] p-6">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
             <div>
               <h1 className="text-3xl font-bold bg-linear-to-r from-[#F04D2A] to-[#D4A13D] bg-clip-text text-transparent font-heading">
@@ -231,7 +231,7 @@ export default function Page() {
                 setEditingQRCode(null);
                 setIsCreateModalOpen(true);
               }}
-              className="gradient-primary text-white hover:shadow-lg hover:shadow-[#F04D2A]/30 transition-shadow font-heading"
+              className="bg-foreground text-[#eeeeee] hover:bg-[#D4A13D]/20 hover:text-black hover:border-[#D4A13D]/80 hover:border cursor-pointer duration-300 font-heading"
             >
               Add New QR
             </Button>
@@ -250,25 +250,25 @@ export default function Page() {
             {/* View Toggle */}
             <div className="flex gap-2 bg-muted p-1 rounded-lg border">
               <Button
-                variant={state.viewMode === "list" ? "default" : "ghost"}
+                variant={"default"}
                 size="sm"
                 onClick={() => state.setViewMode("list")}
                 className={
                   state.viewMode === "list"
-                    ? "bg-linear-to-r from-[#F04D2A] to-[#D4A13D] text-white"
-                    : ""
+                    ? "bg-foreground text-[#eeeeee] hover:bg-gray-600"
+                    : "bg-gray-500 hover:bg-gray-600"
                 }
               >
                 <Layout className="h-4 w-4" />
               </Button>
               <Button
-                variant={state.viewMode === "grid" ? "default" : "ghost"}
+                variant="default"
                 size="sm"
                 onClick={() => state.setViewMode("grid")}
                 className={
                   state.viewMode === "grid"
-                    ? "bg-linear-to-r from-[#F04D2A] to-[#D4A13D] text-white"
-                    : ""
+                    ? "bg-foreground text-[#eeeeee] hover:bg-gray-600"
+                    : "bg-gray-500 hover:bg-gray-600"
                 }
               >
                 <LayoutGrid className="h-4 w-4" />

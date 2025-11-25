@@ -41,7 +41,7 @@ export function SuccessModal({
           )}
           <Button
             onClick={onClose}
-            className="flex-1 gradient-primary text-white hover:shadow-lg hover:shadow-[#F04D2A]/30 transition-shadow font-heading"
+            className="flex-1 bg-foreground hover:bg-muted hover:text-foreground text-white hover:shadow-lg hover:shadow-[#F04D2A]/30 transition-shadow font-heading"
           >
             Go to Dashboard
           </Button>

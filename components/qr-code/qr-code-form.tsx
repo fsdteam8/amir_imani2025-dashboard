@@ -59,7 +59,7 @@ export function QRCodeForm({
         <Input
           id="gameLink"
           type="url"
-          placeholder="https://gamename.com/game"
+          placeholder="Enter Game Link"
           value={gameLink}
           onChange={(e) => setGameLink(e.target.value)}
           required
@@ -80,7 +80,7 @@ export function QRCodeForm({
         <Button
           type="submit"
           disabled={isLoading}
-          className="flex-1 gradient-primary text-white hover:shadow-lg hover:shadow-[#F04D2A]/30 transition-shadow font-heading text-base"
+          className="flex-1 bg-foreground hover:bg-foreground/80 cursor-pointer duration-300 text-[#eeeeee] hover:shadow-lg hover:shadow-[#F04D2A]/30 transition-shadow font-heading text-base"
         >
           {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
           {qrCode ? "Update QR Code" : "Generate QR Code"}
@@ -88,8 +88,7 @@ export function QRCodeForm({
         {onCancel && (
           <Button
             type="button"
-            className="font-heading text-base text-(--base-color) border-(--base-color)"
-            variant="outline"
+            className="font-heading text-base  hover:bg-[#f72d00] border-[#F04D2A] "
             onClick={onCancel}
           >
             Cancel

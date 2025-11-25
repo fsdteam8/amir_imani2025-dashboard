@@ -15,7 +15,7 @@
   /* Cosmic Navy - Secondary Background, Text throughout website */
   --foreground: #0e1d2b;
   /* Earthy Beige - Secondary Backgrounds, Card Backgrounds */
-  --card: #f2e3c6;
+  --card: #eee;
   --card-foreground: #0e1d2b;
   --popover: #ffffff;
   --popover-foreground: #0e1d2b;
@@ -30,7 +30,7 @@
   --muted: #f2e3c6;
   --muted-foreground: #0e1d2b;
   /* Mystic Gold - Accents */
-  --accent: #d4a13d;
+  --accent: #f2e3c6;
   --accent-foreground: #0e1d2b;
   --destructive: #f04d2a;
   --destructive-foreground: #ffffff;
