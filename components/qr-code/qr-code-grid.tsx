@@ -40,16 +40,16 @@ export function QRCodeGrid({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {qrCodes.map((qr) => (
-        <Card key={qr._id} className="flex flex-col border-none">
+        <Card key={qr._id} className="flex flex-col border-none md:mx-0 mx-4">
           <CardContent className="p-4 flex flex-col gap-3 flex-1">
-            <div className="flex items-start justify-between gap-2">
-              {/* <Badge
+            {/* <div className="flex items-start justify-between gap-2">
+              <Badge
                 variant={qr.status === "Active" ? "default" : "secondary"}
                 className="text-xs"
               >
                 {qr.status}
-              </Badge> */}
-            </div>
+              </Badge>
+            </div> */}
 
             {qr.qrCode && (
               <div className="flex justify-center">

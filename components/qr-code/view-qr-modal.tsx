@@ -32,7 +32,7 @@ export function ViewQRModal({ qrCode, isOpen, onClose }: ViewQRModalProps) {
               View your generated QR code details.
             </span>
           </div>
-          <DialogClose className="absolute cursor-pointer rounded-sm top-10 right-10 font-heading px-6 py-3 text-base text-(--base-color) border w-[95px] h-[48px] border-(--base-color) hover:bg-(--base-color) hover:text-white">
+          <DialogClose className="absolute cursor-pointer  rounded-sm md:top-10 md:right-10 right-4 top-4 font-heading text-base text-(--base-color) border md:w-[95px] md:h-[48px] w-[80px] h-[40px] border-(--base-color) hover:bg-(--base-color) hover:text-white">
             Close
           </DialogClose>
         </DialogHeader>

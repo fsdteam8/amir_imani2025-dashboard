@@ -72,7 +72,7 @@ export function QRCodeTable({
 
   return (
     <div className="w-full overflow-x-auto">
-      <Table>
+      <Table className="md:mx-0 mx-2">
         <TableHeader
           className={`text-primary text-2xl text-center bg-[#F2E3C6]/40 font-heading font-bold`}
         >

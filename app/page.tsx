@@ -238,7 +238,7 @@ export default function Page() {
                 setEditingQRCode(null);
                 setIsCreateModalOpen(true);
               }}
-              className="bg-foreground text-[#eeeeee] hover:bg-[#D4A13D]/20 hover:text-black/50 hover:border-foreground hover:border-[1px] cursor-pointer duration-300 font-heading whitespace-nowrap text-sm md:text-base px-3 md:px-4"
+              className="bg-foreground text-[#eeeeee] hover:bg-foreground/80 hover:text-white border-none cursor-pointer duration-300 font-heading whitespace-nowrap text-sm md:text-base px-3 md:px-4"
             >
               <span className="hidden sm:inline">Add New QR</span>
               <span className="sm:hidden">Add QR</span>
