@@ -9,12 +9,12 @@ export function useDeleteQRCode() {
 
   const mutation = useMutation({
     mutationFn: (id: string) => {
-      console.log("🔧 Delete mutation function called with ID:", id);
-      console.log("🌐 Making DELETE request to:", `/qrcodes/${id}`);
+      // console.log("🔧 Delete mutation function called with ID:", id);
+      // console.log("🌐 Making DELETE request to:", `/qrcodes/${id}`);
       return qrCodeService.delete(id);
     },
     onMutate: async (id) => {
-      console.log("⏳ onMutate: Starting delete for ID:", id);
+      // console.log("⏳ onMutate: Starting delete for ID:", id);
 
       // Show loading toast
       toast.loading("Deleting QR code...", { id: "delete-qr" });
@@ -53,17 +53,14 @@ export function useDeleteQRCode() {
         }
       );
 
-      console.log("✨ Optimistic update applied");
+      // console.log("✨ Optimistic update applied");
 
       // Return context for rollback
       return { previousLists };
     },
     onSuccess: (data, id) => {
-      console.log(
-        "✅ onSuccess: Delete successful for ID:",
-        id,
-        "Response:",
-        data
+      toast.success(
+        `✅ onSuccess: Delete successful for ID: ${id}, Response: ${data}`
       );
 
       // Remove the detail cache
@@ -84,7 +81,7 @@ export function useDeleteQRCode() {
         context.previousLists.forEach(([queryKey, data]) => {
           queryClient.setQueryData(queryKey, data);
         });
-        console.log("🔄 Rollback completed");
+        // console.log("🔄 Rollback completed");
       }
 
       const errorMessage =

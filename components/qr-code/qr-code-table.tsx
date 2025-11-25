@@ -42,7 +42,7 @@ export function QRCodeTable({
     );
   }
 
-  console.log(qrCodes);
+  // console.log(qrCodes);
 
   if (qrCodes.length === 0) {
     return (

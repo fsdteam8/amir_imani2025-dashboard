@@ -38,6 +38,7 @@ import type {
 } from "@/lib/types/qr-code";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function Page() {
   const state = useQRCodeState();
@@ -50,7 +51,7 @@ export default function Page() {
     sortOrder: state.sortOrder,
   });
 
-  console.log(qrCodes);
+  // console.log(qrCodes);
 
   const { create, isLoading: isCreating } = useCreateQRCode();
   const { update, isLoading: isUpdating } = useUpdateQRCode();
@@ -83,18 +84,18 @@ export default function Page() {
 
   // Handle delete
   const handleDelete = async () => {
-    console.log("🗑️ handleDelete called");
-    console.log("Selected QR ID:", state.selectedQRId);
+    // console.log("🗑️ handleDelete called");
+    // console.log("Selected QR ID:", state.selectedQRId);
 
     if (!state.selectedQRId) {
-      console.warn("No QR ID selected, aborting delete");
+      toast.error("No QR ID selected, aborting delete");
       return;
     }
 
     try {
       console.log("🚀 Calling deleteQR with ID:", state.selectedQRId);
       const result = await deleteQR(state.selectedQRId);
-      console.log("✅ Delete successful, result:", result);
+      toast.success(`✅ Delete successful, result: ${result}`);
 
       // Success - mutation already shows toast and updates cache
       state.setIsDeleteModalOpen(false);
@@ -102,7 +103,7 @@ export default function Page() {
     } catch (error) {
       // Error - mutation already shows error toast and rolls back
       // Keep modal open so user can try again or cancel
-      console.error("❌ Delete failed:", error);
+      toast.error(`❌ Delete failed: ${error}`);
     }
   };
 

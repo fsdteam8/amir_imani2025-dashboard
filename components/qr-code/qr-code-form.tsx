@@ -21,7 +21,7 @@ export function QRCodeForm({
   const [gameName, setGameName] = useState("");
   const [gameLink, setGameLink] = useState("");
 
-  console.log(qrCode);
+  // console.log(qrCode);
 
   useEffect(() => {
     if (qrCode) {
