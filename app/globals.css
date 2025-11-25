@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-heading: "Goldman", sans-serif;
+  /* --font-heading: "Goldman", sans-serif; */
   --font-paragraph: "Poppins", sans-serif;
   --base-color: #f04d2a;
 }
@@ -15,7 +15,7 @@
   /* Cosmic Navy - Secondary Background, Text throughout website */
   --foreground: #0e1d2b;
   /* Earthy Beige - Secondary Backgrounds, Card Backgrounds */
-  --card: #eee;
+  --card: #eeeeee;
   --card-foreground: #0e1d2b;
   --popover: #ffffff;
   --popover-foreground: #0e1d2b;
@@ -155,6 +155,6 @@
 /* Add gradient utility class for primary gradient */
 @layer components {
   .gradient-primary {
-    background: linear-gradient(90deg, #f04d2a 0%, #d4a13d 100%);
+    background: #f04d2a;
   }
 }

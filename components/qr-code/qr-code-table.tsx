@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, Download, Edit2, Trash2 } from "lucide-react";
 import type { QRCode, SortField, SortOrder } from "@/lib/types/qr-code";
@@ -75,7 +74,7 @@ export function QRCodeTable({
     <div className="w-full overflow-x-auto">
       <Table>
         <TableHeader
-          className={`text-primary text-2xl text-center bg-[#F2E3C6]/40 font-heading`}
+          className={`text-primary text-2xl text-center bg-[#F2E3C6]/40 font-heading font-bold`}
         >
           <TableRow>
             <SortableHeader field="gameName" label="Game Name" />
@@ -89,7 +88,9 @@ export function QRCodeTable({
           {qrCodes?.map((qr, idx) => (
             <TableRow
               key={qr?._id}
-              className={` ${idx % 2 !== 0 ? "bg-[#e0e0e0]/40" : "bg-white"}`}
+              className={`border-none ${
+                idx % 2 !== 0 ? "bg-[#e0e0e0]/40" : "bg-white"
+              }`}
             >
               <TableCell className="font-medium">{qr?.gameName}</TableCell>
               <TableCell>

@@ -36,7 +36,7 @@ export function MobileSidebar({ onLogout }: MobileSidebarProps) {
 
           <nav className="flex-1 px-3 py-6 space-y-2">
             <div
-              className="px-3 py-2 rounded-sm gradient-primary backdrop-blur-sm flex items-center justify-between cursor-pointer"
+              className="px-3 py-2 rounded-sm bg-foreground backdrop-blur-sm flex items-center justify-between cursor-pointer"
               onClick={() => setOpen(false)}
             >
               {/* Nav item  */}
@@ -65,7 +65,7 @@ export function MobileSidebar({ onLogout }: MobileSidebarProps) {
             <Button
               variant="outline"
               size="sm"
-              className="w-full text-red-500 border-red-500/30 hover:bg-red-100 hover:text-red-600 cursor-pointer"
+              className="w-full text-red-500 border-foreground border-none hover:bg-red-100 hover:text-red-600 cursor-pointer"
               onClick={() => {
                 setOpen(false);
                 onLogout?.();

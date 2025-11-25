@@ -18,10 +18,10 @@ export default function RootLayout({
       <div className="w-full ">
         <Image
           src={"/assets/amir_imani-logo.svg"}
-          width={200}
-          height={200}
+          width={400}
+          height={400}
           alt="Admin Logo"
-          className="w-40 h-40 object-contain mx-auto mb-10"
+          className="w-80 h-80 object-contain mx-auto"
           priority
         />
       </div>

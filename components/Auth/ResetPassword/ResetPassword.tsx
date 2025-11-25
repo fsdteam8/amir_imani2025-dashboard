@@ -159,7 +159,7 @@ export default function ResetPassword() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full h-12 gradient-primary hover:bg-red-800 text-white font-semibold rounded-md cursor-pointer font-heading text-base"
+              className="w-full h-12 bg-foreground hover:bg-foreground/50 text-white font-semibold rounded-md cursor-pointer font-heading text-base"
             >
               {loading ? "Changing Password..." : "Change Password"}
             </Button>

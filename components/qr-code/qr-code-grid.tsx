@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye, Download, Edit2, Trash2 } from "lucide-react";
 import type { QRCode } from "@/lib/types/qr-code";
@@ -41,7 +40,7 @@ export function QRCodeGrid({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {qrCodes.map((qr) => (
-        <Card key={qr._id} className="flex flex-col">
+        <Card key={qr._id} className="flex flex-col border-none">
           <CardContent className="p-4 flex flex-col gap-3 flex-1">
             <div className="flex items-start justify-between gap-2">
               {/* <Badge
@@ -59,7 +58,7 @@ export function QRCodeGrid({
                   height={600}
                   src={qr.qrCode || "/placeholder.svg"}
                   alt="QR Code"
-                  className="h-68 w-68 p-1"
+                  className="p-1 object-cover"
                 />
               </div>
             )}

@@ -173,7 +173,7 @@ export default function VerifyOTP() {
           <Button
             type="submit"
             disabled={loading}
-            className="gradient-primary hover:bg-red-800 text-white h-12 w-full rounded-md text-base font-semibold shadow-md flex items-center justify-center cursor-pointer"
+            className="bg-foreground hover:bg-foreground/50 text-white h-12 w-full rounded-md text-base font-semibold shadow-md flex items-center justify-center cursor-pointer"
           >
             {loading ? (
               <>

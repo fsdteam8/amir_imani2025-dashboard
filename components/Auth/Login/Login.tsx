@@ -168,7 +168,7 @@ export default function Login() {
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full h-10 gradient-primary hover:bg-[##ff2b2b] cursor-pointer font-heading"
+            className="w-full h-10 bg-foreground hover:bg-foreground/50 cursor-pointer font-heading"
             disabled={isLoading}
           >
             {isLoading ? "Logging In..." : "Log In"}

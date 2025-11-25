@@ -58,7 +58,7 @@ export default function ForgetPassword() {
 
   return (
     <div className="w-full max-w-[756px] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.10)] rounded-[12px] p-10">
-      <h2 className="text-3xl md:text-[48px] font-bold leading-[150%] font-playfair text-primary mb-2 font-heading">
+      <h2 className="text-3xl md:text-[48px] font-bold leading-[150%] font-playfair text-primary mb-2 font-heading text-center">
         Reset Your Password
       </h2>
       <p className="text-gray-500 mb-6">
@@ -79,7 +79,7 @@ export default function ForgetPassword() {
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="hello@example.com"
+                    placeholder="Enter your email address"
                     className="h-12 w-full"
                     {...field}
                   />
@@ -92,7 +92,7 @@ export default function ForgetPassword() {
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full h-10 gradient-primary hover:bg-red-800 cursor-pointer"
+            className="w-full h-10 bg-foreground hover:bg-foreground/50 cursor-pointer"
             disabled={isForgotPasswordLoading}
           >
             {isForgotPasswordLoading ? "Sending OTP..." : "Send OTP"}

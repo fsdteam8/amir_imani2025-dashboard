@@ -25,7 +25,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Layout, LayoutGrid } from "lucide-react";
+import { Layout, LayoutGrid, List } from "lucide-react";
 import { useQRCodes } from "@/lib/hooks/use-qr-codes";
 import { useCreateQRCode } from "@/lib/hooks/use-create-qr-code";
 import { useUpdateQRCode } from "@/lib/hooks/use-update-qr-code";
@@ -199,14 +199,8 @@ export default function Page() {
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Sidebar */}
+      {/* Desktop Sidebar */}
       <Sidebar
-        onLogout={() => {
-          localStorage.removeItem("authToken");
-          signOut({ callbackUrl: "/login" });
-        }}
-      />
-      <MobileSidebar
         onLogout={() => {
           localStorage.removeItem("authToken");
           signOut({ callbackUrl: "/login" });
@@ -216,50 +210,59 @@ export default function Page() {
       {/* Main Content */}
       <main className="flex-1 overflow-hidden flex flex-col">
         {/* Header */}
-        <header className="border-b bg-[#eeeeee] p-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
-            <div>
-              <h1 className="text-3xl font-bold bg-linear-to-r from-[#F04D2A] to-[#D4A13D] bg-clip-text text-transparent font-heading">
-                QR Code Dashboard
-              </h1>
-              <p className="text-muted-foreground ">
-                Manage your game QR codes and links
-              </p>
+        <header className="bg-[#eeeeee] p-4 md:p-6">
+          {/* Top Row: Menu + Title + Add Button */}
+          <div className="flex items-center justify-between mb-4 gap-3">
+            <div className="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
+              {/* Mobile Menu Trigger */}
+              <MobileSidebar
+                onLogout={() => {
+                  localStorage.removeItem("authToken");
+                  signOut({ callbackUrl: "/login" });
+                }}
+              />
+
+              <div className="min-w-0 flex-1">
+                <h1 className="text-xl md:text-3xl font-bold bg-[#F04D2A] bg-clip-text text-transparent font-heading truncate">
+                  QR Code Dashboard
+                </h1>
+                <p className="text-muted-foreground text-xs md:text-sm hidden sm:block">
+                  Manage your game QR codes and links
+                </p>
+              </div>
             </div>
+
             <Button
               onClick={() => {
                 setEditingQRCode(null);
                 setIsCreateModalOpen(true);
               }}
-              className="bg-foreground text-[#eeeeee] hover:bg-[#D4A13D]/20 hover:text-black hover:border-[#D4A13D]/80 hover:border cursor-pointer duration-300 font-heading"
+              className="bg-foreground text-[#eeeeee] hover:bg-[#D4A13D]/20 hover:text-black/50 hover:border-foreground hover:border-[1px] cursor-pointer duration-300 font-heading whitespace-nowrap text-sm md:text-base px-3 md:px-4"
             >
-              Add New QR
+              <span className="hidden sm:inline">Add New QR</span>
+              <span className="sm:hidden">Add QR</span>
             </Button>
           </div>
 
-          {/* Filters and Search */}
-          <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+          {/* Bottom Row: Search + View Toggle */}
+          <div className="flex gap-2 md:gap-4 items-center">
             <div className="flex-1">
               <SearchBar value={state.search} onChange={state.setSearch} />
             </div>
-            {/* <StatusFilter value={state.status} onChange={(value) => {
-              state.setStatus(value)
-              state.resetPagination()
-            }} /> */}
 
             {/* View Toggle */}
-            <div className="flex gap-2 bg-muted p-1 rounded-lg border">
+            <div className="flex gap-1 bg-white p-1 rounded-lg shrink-0">
               <Button
                 variant={"default"}
                 size="sm"
                 onClick={() => state.setViewMode("list")}
                 className={
                   state.viewMode === "list"
-                    ? "bg-foreground text-[#eeeeee] hover:bg-gray-600"
-                    : "bg-gray-500 hover:bg-gray-600"
+                    ? "bg-foreground text-[#eeeeee] hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
+                    : "bg-gray-500 hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
                 }
               >
-                <Layout className="h-4 w-4" />
+                <List className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
               <Button
                 variant="default"
@@ -267,11 +270,11 @@ export default function Page() {
                 onClick={() => state.setViewMode("grid")}
                 className={
                   state.viewMode === "grid"
-                    ? "bg-foreground text-[#eeeeee] hover:bg-gray-600"
-                    : "bg-gray-500 hover:bg-gray-600"
+                    ? "bg-foreground text-[#eeeeee] hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
+                    : "bg-gray-500 hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
                 }
               >
-                <LayoutGrid className="h-4 w-4" />
+                <LayoutGrid className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
             </div>
           </div>

@@ -8,7 +8,7 @@ interface SidebarProps {
 
 export function Sidebar({ onLogout }: SidebarProps) {
   return (
-    <aside className="hidden md:flex w-[312px] bg-[#eeeeee] text-white flex-col h-screen border-r border-[#D4A13D]/20">
+    <aside className="hidden md:flex w-[312px] bg-[#f2e3c6] text-white flex-col h-screen">
       {/* Logo section with brand logo */}
       <div className="p-6 flex items-center justify-center gap-3 border-b border-[#D4A13D]/20 w-full">
         <Image
@@ -16,7 +16,7 @@ export function Sidebar({ onLogout }: SidebarProps) {
           alt="Ultra Prestigious Winner Logo"
           width={158}
           height={100}
-          className="w-[278px] h-[126px]"
+          className="w-[278px] h-[118px]"
         />
         {/* <span className="font-semibold text-sm">QR Codes</span> */}
       </div>
@@ -49,7 +49,7 @@ export function Sidebar({ onLogout }: SidebarProps) {
         <Button
           variant="outline"
           size="sm"
-          className="w-full text-[#eeeeee] bg-foreground hover:bg-[#D4A13D]/20 hover:text-red-600 cursor-pointer duration-300"
+          className="w-full text-[#eeeeee] bg-foreground border-none hover:bg-primary hover:text-white cursor-pointer duration-300"
           onClick={onLogout}
         >
           <LogOut className="h-4 w-4 mr-2" />
