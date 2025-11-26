@@ -16,12 +16,12 @@ export function Sidebar({ onLogout }: SidebarProps) {
           alt="Ultra Prestigious Winner Logo"
           width={158}
           height={100}
-          className="w-[278px] h-[118px]"
+          className="w-[278px] h-[115px]"
         />
         {/* <span className="font-semibold text-sm">QR Codes</span> */}
       </div>
 
-      <nav className="flex-1 px-3 py-6 space-y-2">
+      <nav className="flex-1 px-6 py-6 space-y-2">
         <div className="px-3 py-2 rounded-sm bg-foreground backdrop-blur-sm flex items-center justify-between cursor-pointer">
           {/* Nav item  */}
           <div className="flex items-center gap-2 ">
