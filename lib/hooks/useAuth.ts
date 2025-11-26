@@ -98,47 +98,12 @@ export const useAuth = () => {
   // Verify OTP mutation
   const verifyOtpMutation = useMutation({
     mutationFn: (input: VerifyOtpInput) => authService.verifyOtp(input),
-    onMutate: () => {
-      toast.loading("Verifying OTP...", { id: "auth-verify-otp" });
-    },
-    onSuccess: async (res) => {
-      if (res.data?.accessToken) {
-        localStorage.setItem("authToken", res.data.accessToken);
-
-        await queryClient.invalidateQueries({
-          queryKey: queryKeys.auth.currentUser(),
-        });
-
-        toast.success("OTP verified successfully!", { id: "auth-verify-otp" });
-        router.push("/dashboard");
-      }
-    },
-    onError: (err: any) => {
-      const message =
-        err.response?.data?.message || err.message || "OTP verification failed";
-      toast.error(message, { id: "auth-verify-otp" });
-    },
   });
 
   // Forgot password mutation
   const forgotPasswordMutation = useMutation({
     mutationFn: (input: ForgotPasswordInput) =>
       authService.forgotPassword(input),
-    onMutate: () => {
-      toast.loading("Sending reset email...", { id: "auth-forgot-password" });
-    },
-    onSuccess: () => {
-      toast.success("Reset email sent! Check your inbox.", {
-        id: "auth-forgot-password",
-      });
-    },
-    onError: (err: any) => {
-      const message =
-        err.response?.data?.message ||
-        err.message ||
-        "Failed to send reset email";
-      toast.error(message, { id: "auth-forgot-password" });
-    },
   });
 
   // Reset password mutation

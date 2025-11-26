@@ -7,6 +7,7 @@ import type {
   VerifyOtpInput,
   ChangePasswordInput,
   AuthResponse,
+  VerifyOtpResponse,
   GenericResponse,
   User,
 } from "../types/auth";
@@ -31,17 +32,19 @@ export const authService = {
   },
 
   // Verify OTP
-  verifyOtp: async (input: VerifyOtpInput): Promise<AuthResponse> => {
-    const response = await axiosInstance.post<AuthResponse>(
-      "/auth/reset/password/verify-otp",
+  verifyOtp: async (input: VerifyOtpInput): Promise<VerifyOtpResponse> => {
+    const response = await axiosInstance.post<VerifyOtpResponse>(
+      "/auth/verify-otp",
       input
     );
     return response.data;
   },
 
   // Forgot Password
-  forgotPassword: async (input: ForgotPasswordInput): Promise<AuthResponse> => {
-    const response = await axiosInstance.post<AuthResponse>(
+  forgotPassword: async (
+    input: ForgotPasswordInput
+  ): Promise<GenericResponse> => {
+    const response = await axiosInstance.post<GenericResponse>(
       "/auth/forgot-password",
       input
     );

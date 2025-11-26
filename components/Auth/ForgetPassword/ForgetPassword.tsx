@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +27,9 @@ const forgotSchema = z.object({
 type ForgotFormValues = z.infer<typeof forgotSchema>;
 
 export default function ForgetPassword() {
-  const { forgotPassword, isForgotPasswordLoading } = useAuth();
+  const { forgotPassword } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<ForgotFormValues>({
     resolver: zodResolver(forgotSchema),
     defaultValues: {
@@ -37,22 +40,31 @@ export default function ForgetPassword() {
   const router = useRouter();
 
   const onSubmit = async (values: ForgotFormValues) => {
+    const toastId = "forgot-password";
+    setIsLoading(true);
+
     try {
-      const res = await forgotPassword({ email: values.email });
+      toast.loading("Sending OTP...", { id: toastId });
 
-      if (res?.success === false) {
-        toast.error(res?.message || "Something went wrong");
-        return;
-      }
+      await forgotPassword({ email: values.email });
 
-      const token = res?.data?.accessToken;
-      if (token) {
-        router.push(`/verify-otp?token=${token}&mode=forgot`);
-      } else {
-        toast.error("Token not received, please try again");
-      }
-    } catch {
-      // Error already handled by the hook
+      toast.success("OTP sent! Check your email.", { id: toastId });
+
+      // Store email for verify-otp page
+      localStorage.setItem("userEmail", values.email);
+
+      // Use setTimeout to ensure redirect happens after current call stack
+      setTimeout(() => {
+        router.push(`/verify-otp?mode=forgot`);
+      }, 100);
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Failed to send OTP";
+      toast.error(message, { id: toastId });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -62,7 +74,7 @@ export default function ForgetPassword() {
         Reset Your Password
       </h2>
       <p className="text-gray-500 mb-6">
-        Enter your email address and we’ll send you code to reset your password.
+        Enter your email address and we'll send you code to reset your password.
       </p>
 
       <Form {...form}>
@@ -93,9 +105,9 @@ export default function ForgetPassword() {
           <Button
             type="submit"
             className="w-full h-10 bg-foreground hover:bg-foreground/50 cursor-pointer"
-            disabled={isForgotPasswordLoading}
+            disabled={isLoading}
           >
-            {isForgotPasswordLoading ? "Sending OTP..." : "Send OTP"}
+            {isLoading ? "Sending OTP..." : "Send OTP"}
           </Button>
         </form>
       </Form>

@@ -71,34 +71,59 @@ export default function VerifyOTP() {
   const onSubmit = async () => {
     const otp = otpValue.join("");
     if (!otp) return toast.warning("Please enter the OTP");
-    if (!token) return toast.error("Token not found. Please try again.");
 
     setLoading(true);
     try {
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/reset/password/verify-otp`;
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ otp }),
-      });
+      // For forgot mode, send email and otp in body
+      if (mode === "forgot") {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, otp }),
+        });
 
-      const result = await response.json();
-      if (!response.ok)
-        throw new Error(result.message || "Verification failed");
+        const result = await response.json();
+        if (!response.ok)
+          throw new Error(result.message || "Verification failed");
 
-      setOtpValue(Array(6).fill(""));
-      form.reset();
-      toast.success(result.message || "OTP verified successfully");
+        setOtpValue(Array(6).fill(""));
+        form.reset();
+        toast.success(result.message || "OTP verified successfully");
 
-      // Redirect after success
-      if (mode === "register") {
-        router.push("/login");
+        // Extract resetToken and redirect to reset-password
+        const resetToken = result.data?.resetToken;
+        if (resetToken) {
+          router.push(`/reset-password?resetToken=${resetToken}`);
+        } else {
+          toast.error("Reset token not received");
+        }
       } else {
-        router.push(`/reset-password?token=${token}`);
+        // Register mode - use token from URL
+        if (!token) return toast.error("Token not found. Please try again.");
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ otp }),
+        });
+
+        const result = await response.json();
+        if (!response.ok)
+          throw new Error(result.message || "Verification failed");
+
+        setOtpValue(Array(6).fill(""));
+        form.reset();
+        toast.success(result.message || "OTP verified successfully");
+
+        // Redirect to login after registration verification
+        router.push("/login");
       }
     } catch {
       toast.error("Something went wrong");

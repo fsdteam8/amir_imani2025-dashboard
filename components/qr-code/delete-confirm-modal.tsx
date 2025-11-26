@@ -34,7 +34,7 @@ export function DeleteConfirmModal({
               width={56}
               height={56}
             />
-            <span className="font-heading text-[24px] font-normal">
+            <span className="font-heading text-[24px] font-bold ">
               Delete Confirmation
             </span>
           </AlertDialogTitle>

@@ -40,7 +40,7 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = encodeURIComponent(searchParams.get("token") || "");
+  const resetToken = searchParams.get("resetToken") || "";
 
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -51,15 +51,15 @@ export default function ResetPassword() {
   });
 
   const onSubmit = async (values: ResetPasswordFormValues) => {
-    if (!token) {
-      toast.error("Token not found. Try again.");
+    if (!resetToken) {
+      toast.error("Reset token not found. Try again.");
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await authService.resetPassword(token, {
+      const res = await authService.resetPassword(resetToken, {
         newPassword: values.password,
       });
       toast.success(res.message || "Password changed successfully!");
