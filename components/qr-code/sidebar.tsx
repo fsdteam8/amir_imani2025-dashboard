@@ -1,12 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, BookOpen } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   onLogout?: () => void;
 }
 
 export function Sidebar({ onLogout }: SidebarProps) {
+  const pathname = usePathname();
   return (
     <aside className="hidden md:flex w-[312px] bg-[#f2e3c6] text-white flex-col h-screen">
       {/* Logo section with brand logo */}
@@ -22,9 +26,16 @@ export function Sidebar({ onLogout }: SidebarProps) {
       </div>
 
       <nav className="flex-1 px-6 py-6 space-y-2">
-        <div className="px-3 py-2 rounded-sm bg-foreground backdrop-blur-sm flex items-center justify-between cursor-pointer">
-          {/* Nav item  */}
-          <div className="flex items-center gap-2 ">
+        <Link
+          href="/"
+          className={cn(
+            "px-3 py-2 rounded-sm flex items-center justify-between cursor-pointer transition-colors",
+            pathname === "/"
+              ? "bg-foreground backdrop-blur-sm text-white"
+              : "text-black  hover:bg-white/10"
+          )}
+        >
+          <div className="flex items-center gap-2">
             <Image
               src="/assets/qrcode-icon.svg"
               alt="QR Code Icon"
@@ -34,15 +45,40 @@ export function Sidebar({ onLogout }: SidebarProps) {
             />
             <p className="text-base font-medium font-heading">QR Codes</p>
           </div>
+          {pathname === "/" && (
+            <Image
+              src="/assets/sidebar-sparkle.svg"
+              alt="Sparkle"
+              width={24}
+              height={24}
+              className="w-4 h-4"
+            />
+          )}
+        </Link>
 
-          <Image
-            src="/assets/sidebar-sparkle.svg"
-            alt="Sparkle"
-            width={24}
-            height={24}
-            className="w-4 h-4"
-          />
-        </div>
+        <Link
+          href="/blogs"
+          className={cn(
+            "px-3 py-2 rounded-sm flex items-center justify-between cursor-pointer transition-colors",
+            pathname.startsWith("/blogs")
+              ? "bg-foreground backdrop-blur-sm text-white"
+              : "text-black hover:bg-white/10"
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-5 h-5" />
+            <p className="text-base font-medium font-heading">Blogs</p>
+          </div>
+          {pathname.startsWith("/blogs") && (
+            <Image
+              src="/assets/sidebar-sparkle.svg"
+              alt="Sparkle"
+              width={24}
+              height={24}
+              className="w-4 h-4"
+            />
+          )}
+        </Link>
       </nav>
 
       <div className="p-6 border-t border-[#D4A13D]/20 ">

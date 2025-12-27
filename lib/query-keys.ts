@@ -26,4 +26,20 @@ export const queryKeys = {
     currentUser: () => [...queryKeys.auth.all, "current-user"] as const,
     users: () => [...queryKeys.auth.all, "users"] as const,
   },
+
+  // Blog queries
+  blogs: {
+    all: ["blogs"] as const,
+    lists: () => [...queryKeys.blogs.all, "list"] as const,
+    list: (filters: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      category?: string;
+      status?: string;
+    }) => [...queryKeys.blogs.lists(), filters] as const,
+    details: () => [...queryKeys.blogs.all, "detail"] as const,
+    detail: (idOrSlug: string) =>
+      [...queryKeys.blogs.details(), idOrSlug] as const,
+  },
 } as const;
