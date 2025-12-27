@@ -119,14 +119,15 @@ export function ProductForm({
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const input: CreateProductInput = {
       productName: values.productName,
-      price: values.price,
+      price: Number(values.price),
       productType: values.productType,
       feature: values.feature,
       description: values.description,
       videoLink: values.videoLink,
       color: values.color,
       size: values.size,
-      quantity: values.quantity,
+      quantity:
+        values.quantity !== undefined ? Number(values.quantity) : undefined,
       imgs: images.length > 0 ? images : undefined,
       existingImgs: existingImages.length > 0 ? existingImages : undefined,
     };

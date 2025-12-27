@@ -67,24 +67,36 @@ export const productService = {
   ): Promise<Product> => {
     const formData = new FormData();
     if (input.productName) formData.append("productName", input.productName);
-    if (input.price !== undefined)
-      formData.append("price", input.price.toString());
+    if (input.price !== undefined) {
+      const val = Number(input.price);
+      if (!isNaN(val)) {
+        formData.append("price", val.toString());
+      }
+    }
     if (input.productType) formData.append("productType", input.productType);
     if (input.feature) formData.append("feature", input.feature);
     if (input.description) formData.append("description", input.description);
     if (input.videoLink) formData.append("videoLink", input.videoLink);
+
+    // Color and size as arrays
     if (input.color && input.color.length > 0) {
-      input.color.forEach((c) => formData.append("color[]", c));
+      input.color.forEach((c) => formData.append("color", c));
     }
     if (input.size && input.size.length > 0) {
-      input.size.forEach((s) => formData.append("size[]", s));
+      input.size.forEach((s) => formData.append("size", s));
     }
-    if (input.quantity !== undefined)
-      formData.append("quantity", input.quantity.toString());
 
-    // Send existing images to keep
+    if (input.quantity !== undefined) {
+      const val = Number(input.quantity);
+      if (!isNaN(val)) {
+        formData.append("quantity", val.toString());
+      }
+    }
+
+    // CONSISTENCY: Send both existing URLs and new files under the 'imgs' field.
+    // The backend FilesInterceptor will pull the files, and the body will contain the strings.
     if (input.existingImgs && input.existingImgs.length > 0) {
-      input.existingImgs.forEach((url) => formData.append("existingImgs", url));
+      input.existingImgs.forEach((url) => formData.append("imgs", url));
     }
 
     if (input.imgs && input.imgs.length > 0) {
@@ -97,9 +109,9 @@ export const productService = {
       success: boolean;
       data: Product;
     }>(`/products/${id}`, formData, {
-      // headers: {
-      //   "Content-Type": "multipart/form-data",
-      // },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     return response.data.data;
   },

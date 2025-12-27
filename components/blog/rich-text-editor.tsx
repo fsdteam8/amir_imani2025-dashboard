@@ -68,20 +68,28 @@ export function RichTextEditor({
       />
       <style jsx global>{`
         .rich-text-editor .ql-toolbar {
-          border-top-left-radius: 0.5rem;
-          border-top-right-radius: 0.5rem;
+          border-top-left-radius: 0.75rem;
+          border-top-right-radius: 0.75rem;
           border-color: hsl(var(--input));
-          background-color: hsl(var(--muted) / 0.5);
+          background-color: hsl(var(--muted) / 0.3);
+          padding: 0.75rem;
         }
         .rich-text-editor .ql-container {
-          border-bottom-left-radius: 0.5rem;
-          border-bottom-right-radius: 0.5rem;
+          border-bottom-left-radius: 0.75rem;
+          border-bottom-right-radius: 0.75rem;
           border-color: hsl(var(--input));
-          min-height: 200px;
+          min-height: 400px;
           font-family: inherit;
+          font-size: 1rem;
         }
         .rich-text-editor .ql-editor {
-          min-height: 200px;
+          min-height: 400px;
+          padding: 1.5rem;
+        }
+        .rich-text-editor .ql-editor.ql-blank::before {
+          left: 1.5rem;
+          font-style: normal;
+          color: hsl(var(--muted-foreground) / 0.6);
         }
       `}</style>
     </div>

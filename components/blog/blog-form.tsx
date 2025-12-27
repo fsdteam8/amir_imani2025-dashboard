@@ -96,44 +96,95 @@ export function BlogForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Left Column */}
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter blog title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="max-w-4xl mx-auto space-y-8 pb-20"
+      >
+        {/* Header / Actions */}
+        <div className="flex items-center justify-between top-0 bg-background/80 backdrop-blur-sm z-10 p-4 border-b">
+          <div className="">
+            <h2 className="text-lg font-semibold font-heading">
+              {blog ? "Edit Post" : "New Post"}
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              {blog
+                ? "Refine your story"
+                : "Share your thoughts with the world"}
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={onCancel}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              Discard
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-foreground text-background hover:bg-foreground/90 px-8"
+            >
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {blog ? "Update" : "Publish"}
+            </Button>
+          </div>
+        </div>
 
-            <FormField
-              control={form.control}
-              name="img"
-              render={({ field: { value, onChange, ...field } }) => (
-                <FormItem>
-                  <FormLabel>Thumbnail Image</FormLabel>
-                  <div className="border-2 border-dashed border-input rounded-lg p-6 flex flex-col items-center justify-center text-center hover:bg-muted/50 transition-colors relative">
-                    {previewUrl ? (
-                      <div className="relative w-full aspect-video mb-2">
-                        <Image
-                          src={previewUrl}
-                          alt="Thumbnail preview"
-                          fill
-                          className="object-cover rounded-md"
-                        />
+        {/* Hero Title Section */}
+        <div className="space-y-6">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormControl>
+                  <Input
+                    placeholder="Enter post title..."
+                    className="text-4xl md:text-5xl font-bold border-none px-0 focus-visible:ring-0 placeholder:opacity-30 h-auto py-4"
+                    {...field}
+                  />
+                </FormControl>
+                <div className="flex justify-between items-center text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">
+                  <FormMessage />
+                  <span>{field.value.length} characters</span>
+                </div>
+              </FormItem>
+            )}
+          />
+
+          {/* Cover Image Section */}
+          <FormField
+            control={form.control}
+            name="img"
+            render={({ field: { value, onChange, ...field } }) => (
+              <FormItem>
+                <div className="group relative aspect-video w-full overflow-hidden rounded-2xl border bg-muted/30 transition-all hover:bg-muted/50 border-dashed">
+                  {previewUrl ? (
+                    <>
+                      <Image
+                        src={previewUrl}
+                        alt="Cover preview"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <label className="cursor-pointer bg-white/90 hover:bg-white text-black px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                          Change Cover
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                            {...field}
+                          />
+                        </label>
                         <Button
                           type="button"
-                          variant="ghost"
+                          variant="destructive"
                           size="icon"
-                          className="absolute top-2 right-2 bg-background/80 hover:bg-destructive/10 hover:text-destructive"
+                          className="rounded-full"
                           onClick={(e) => {
                             e.preventDefault();
                             clearImage();
@@ -142,68 +193,53 @@ export function BlogForm({
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
-                    ) : (
-                      <label className="cursor-pointer w-full flex flex-col items-center">
-                        <div className="h-10 w-10 bg-muted rounded-full flex items-center justify-center mb-2">
-                          <UploadCloud className="h-6 w-6 text-muted-foreground" />
-                        </div>
-                        <p className="text-sm font-medium">
-                          Click to upload image
+                    </>
+                  ) : (
+                    <label className="cursor-pointer w-full h-full flex flex-col items-center justify-center text-center p-10">
+                      <div className="mb-4 rounded-full bg-background p-4 shadow-sm transition-transform group-hover:scale-110">
+                        <UploadCloud className="h-8 w-8 text-primary" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-lg font-semibold">
+                          Add a cover photo
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          PNG, JPG (max 5MB)
+                        <p className="text-sm text-muted-foreground">
+                          Recommended: 16:9 ratio, high resolution (PNG/JPG)
                         </p>
-                        <Input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={handleImageChange}
-                          {...field}
-                        />
-                      </label>
-                    )}
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+                      </div>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageChange}
+                        {...field}
+                      />
+                    </label>
+                  )}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          {/* Right Column - Description takes full space or column */}
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    {/* Use RichTextEditor for description as originally requested, or standard textarea if strictly text. 
-                            Given "HTML content" was mentioned in original prompt, we keep RichTextEditor, 
-                            but label it Description. 
-                        */}
-                    <RichTextEditor
-                      value={field.value}
-                      onChange={field.onChange}
-                      placeholder="Write your blog content here..."
-                      className="min-h-[300px]"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <div className="flex justify-end gap-3 pt-4">
-          <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {blog ? "Update Blog" : "Create Blog"}
-          </Button>
+          {/* Editor Section */}
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <RichTextEditor
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Write your story..."
+                    className="border-none"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
       </form>
     </Form>
