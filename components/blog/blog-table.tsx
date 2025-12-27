@@ -23,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { BlogTableSkeleton } from "@/components/skeletons";
 
 interface BlogTableProps {
   blogs: Blog[];
@@ -40,13 +41,7 @@ export function BlogTable({
   onView,
 }: BlogTableProps) {
   if (isLoading) {
-    return (
-      <div className="space-y-4">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="h-16 w-full" />
-        ))}
-      </div>
-    );
+    return <BlogTableSkeleton rows={5} />;
   }
 
   if (blogs.length === 0) {

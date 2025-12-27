@@ -20,6 +20,7 @@ import { MobileSidebar } from "@/components/qr-code/mobile-sidebar";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { HtmlContent } from "@/components/ui/html-content";
+import { ProductGridSkeleton } from "@/components/skeletons";
 
 // Minimal Tabs implementation using Radix UI primitives since components/ui/tabs.tsx is missing
 const Tabs = TabsPrimitive.Root;
@@ -52,8 +53,8 @@ export default function ProductsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full min-h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="flex-1 overflow-auto md:p-6 pt-4 p-4">
+        <ProductGridSkeleton count={8} />
       </div>
     );
   }

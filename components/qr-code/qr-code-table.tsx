@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, Download, Edit2, Trash2 } from "lucide-react";
 import type { QRCode, SortField, SortOrder } from "@/lib/types/qr-code";
 import Link from "next/link";
+import { QRCodeTableSkeleton } from "@/components/skeletons";
 
 interface QRCodeTableProps {
   qrCodes: QRCode[];
@@ -35,11 +36,7 @@ export function QRCodeTable({
   onDownload,
 }: QRCodeTableProps) {
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <p className="text-muted-foreground">Loading QR codes...</p>
-      </div>
-    );
+    return <QRCodeTableSkeleton rows={5} />;
   }
 
   // console.log(qrCodes);

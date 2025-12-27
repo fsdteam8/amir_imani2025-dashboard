@@ -1,6 +1,6 @@
 import { Blog } from "@/lib/types/blog";
 import { BlogCard } from "./blog-card";
-import { Loader2 } from "lucide-react";
+import { BlogGridSkeleton } from "@/components/skeletons";
 
 interface BlogGridProps {
   blogs: Blog[];
@@ -18,11 +18,7 @@ export function BlogGrid({
   onView,
 }: BlogGridProps) {
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center p-20">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
+    return <BlogGridSkeleton count={6} />;
   }
 
   if (blogs.length === 0) {

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, Download, Edit2, Trash2 } from "lucide-react";
 import type { QRCode } from "@/lib/types/qr-code";
 import Image from "next/image";
+import { QRCodeGridSkeleton } from "@/components/skeletons";
 
 interface QRCodeGridProps {
   qrCodes: QRCode[];
@@ -22,11 +23,7 @@ export function QRCodeGrid({
   onDownload,
 }: QRCodeGridProps) {
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <p className="text-muted-foreground">Loading QR codes...</p>
-      </div>
-    );
+    return <QRCodeGridSkeleton count={8} />;
   }
 
   if (qrCodes.length === 0) {
@@ -42,15 +39,6 @@ export function QRCodeGrid({
       {qrCodes.map((qr) => (
         <Card key={qr._id} className="flex flex-col border-none md:mx-0 mx-4">
           <CardContent className="p-4 flex flex-col gap-3 flex-1">
-            {/* <div className="flex items-start justify-between gap-2">
-              <Badge
-                variant={qr.status === "Active" ? "default" : "secondary"}
-                className="text-xs"
-              >
-                {qr.status}
-              </Badge>
-            </div> */}
-
             {qr.qrCode && (
               <div className="flex justify-center">
                 <Image
