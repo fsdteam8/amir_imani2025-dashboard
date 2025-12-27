@@ -26,7 +26,6 @@ import { signOut } from "next-auth/react";
 export default function BlogsPage() {
   const router = useRouter();
   const state = useBlogState();
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const { blogs, pagination, isLoading, refetch } = useBlogs({
     page: state.page,
@@ -88,59 +87,16 @@ export default function BlogsPage() {
             Add New Blog
           </Button>
         </div>
-
-        <div className="flex gap-2 md:gap-4 items-center">
-          <div className="flex-1">
-            <SearchBar value={state.search} onChange={state.setSearch} />
-          </div>
-
-          <div className="flex gap-1 bg-white p-1 rounded-lg shrink-0">
-            <Button
-              variant={"default"}
-              size="sm"
-              onClick={() => setViewMode("list")}
-              className={
-                viewMode === "list"
-                  ? "bg-foreground text-[#eeeeee] hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
-                  : "bg-gray-500 hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
-              }
-            >
-              <List className="h-3 w-3 md:h-4 md:w-4" />
-            </Button>
-            <Button
-              variant="default"
-              size="sm"
-              onClick={() => setViewMode("grid")}
-              className={
-                viewMode === "grid"
-                  ? "bg-foreground text-[#eeeeee] hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
-                  : "bg-gray-500 hover:bg-gray-600 h-8 w-8 md:h-9 md:w-9 p-0"
-              }
-            >
-              <LayoutGrid className="h-3 w-3 md:h-4 md:w-4" />
-            </Button>
-          </div>
-        </div>
       </header>
 
       <div className="flex-1 overflow-auto md:p-6 pt-2">
-        {viewMode === "list" ? (
-          <BlogTable
-            blogs={blogs}
-            isLoading={isLoading}
-            onEdit={handleEdit}
-            onDelete={handleDeleteTrigger}
-            onView={handleEdit}
-          />
-        ) : (
-          <BlogGrid
-            blogs={blogs}
-            isLoading={isLoading}
-            onEdit={handleEdit}
-            onDelete={handleDeleteTrigger}
-            onView={handleEdit}
-          />
-        )}
+        <BlogGrid
+          blogs={blogs}
+          isLoading={isLoading}
+          onEdit={handleEdit}
+          onDelete={handleDeleteTrigger}
+          onView={handleEdit}
+        />
 
         {pagination && pagination.totalPages > 1 && (
           <div className="mt-6 flex justify-center">

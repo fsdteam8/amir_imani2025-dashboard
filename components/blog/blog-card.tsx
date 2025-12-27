@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { HtmlContent } from "@/components/ui/html-content";
 
 interface BlogCardProps {
   blog: Blog;
@@ -20,9 +21,6 @@ interface BlogCardProps {
 export function BlogCard({ blog, onEdit, onDelete, onView }: BlogCardProps) {
   // Use img field directly as per new type definition
   const thumbnail = blog.img;
-
-  // Use description directly
-  const description = blog.description || "No description available";
 
   return (
     <div
@@ -94,9 +92,11 @@ export function BlogCard({ blog, onEdit, onDelete, onView }: BlogCardProps) {
           {blog.title}
         </h3>
 
-        <p className="text-muted-foreground text-sm line-clamp-3 mb-4 leading-relaxed">
-          {description}
-        </p>
+        <HtmlContent
+          html={blog.description || "No description available"}
+          asPlainText
+          className="text-muted-foreground text-sm line-clamp-3 mb-4 leading-relaxed"
+        />
       </div>
     </div>
   );

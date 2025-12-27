@@ -63,8 +63,6 @@ export function BlogTable({
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Status</TableHead>
             <TableHead>Date</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -74,18 +72,6 @@ export function BlogTable({
             <TableRow key={blog._id}>
               <TableCell className="font-medium max-w-[200px] truncate">
                 {blog.title}
-              </TableCell>
-              <TableCell>{blog.category || "-"}</TableCell>
-              <TableCell>
-                <span
-                  className={`text-xs px-2 py-1 rounded-full border ${
-                    blog.status === "published"
-                      ? "bg-green-100 text-green-700 border-green-200"
-                      : "bg-yellow-100 text-yellow-700 border-yellow-200"
-                  }`}
-                >
-                  {blog.status === "published" ? "Published" : "Draft"}
-                </span>
               </TableCell>
               <TableCell>
                 {format(new Date(blog.createdAt), "MMM dd, yyyy")}

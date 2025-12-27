@@ -15,6 +15,8 @@ interface DeleteConfirmModalProps {
   isLoading?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
+  title?: string;
+  description?: string;
 }
 
 export function DeleteConfirmModal({
@@ -22,6 +24,8 @@ export function DeleteConfirmModal({
   isLoading = false,
   onConfirm,
   onCancel,
+  title = "Delete Confirmation",
+  description = "Are you sure you want to delete this item? This action cannot be undone.",
 }: DeleteConfirmModalProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
@@ -34,14 +38,9 @@ export function DeleteConfirmModal({
               width={56}
               height={56}
             />
-            <span className="font-heading text-[24px] font-bold ">
-              Delete Confirmation
-            </span>
+            <span className="font-heading text-[24px] font-bold ">{title}</span>
           </AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to delete this item? This action cannot be
-            undone.
-          </AlertDialogDescription>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex gap-3 justify-between items-center">
           <AlertDialogCancel

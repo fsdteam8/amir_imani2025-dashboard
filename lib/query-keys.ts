@@ -42,4 +42,13 @@ export const queryKeys = {
     detail: (idOrSlug: string) =>
       [...queryKeys.blogs.details(), idOrSlug] as const,
   },
+
+  // Product queries
+  products: {
+    all: ["products"] as const,
+    lists: () => [...queryKeys.products.all, "list"] as const,
+    list: () => [...queryKeys.products.lists()] as const,
+    details: () => [...queryKeys.products.all, "detail"] as const,
+    detail: (id: string) => [...queryKeys.products.details(), id] as const,
+  },
 } as const;
