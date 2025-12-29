@@ -25,7 +25,7 @@ const NavLink = memo(({ href, isActive, icon, label }: NavLinkProps) => (
       "px-3 py-2 rounded-sm flex items-center justify-between cursor-pointer transition-colors",
       isActive
         ? "bg-foreground backdrop-blur-sm text-white"
-        : "text-black hover:bg-white/10"
+        : "text-primary-foreground hover:bg-white/10"
     )}
   >
     <div className="flex items-center gap-2">

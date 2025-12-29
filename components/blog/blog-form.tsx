@@ -170,7 +170,7 @@ export function BlogForm({
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                        <label className="cursor-pointer bg-white/90 hover:bg-white text-black px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                        <label className="cursor-pointer bg-white/90 hover:bg-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
                           Change Cover
                           <Input
                             type="file"
