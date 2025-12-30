@@ -35,10 +35,10 @@ export const productService = {
     if (input.description) formData.append("description", input.description);
     if (input.videoLink) formData.append("videoLink", input.videoLink);
     if (input.color && input.color.length > 0) {
-      input.color.forEach((c) => formData.append("color[]", c));
+      input.color.forEach((c) => formData.append("color", c));
     }
     if (input.size && input.size.length > 0) {
-      input.size.forEach((s) => formData.append("size[]", s));
+      input.size.forEach((s) => formData.append("size", s));
     }
     if (input.quantity !== undefined)
       formData.append("quantity", input.quantity.toString());
@@ -78,7 +78,7 @@ export const productService = {
         size: input.size,
         quantity:
           input.quantity !== undefined ? Number(input.quantity) : undefined,
-        imgs: input.existingImgs, // Use existing images
+        imgs: input.existingImgs || [], // Ensure imgs is always an array
       };
 
       const response = await axiosInstance.put<{
