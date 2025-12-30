@@ -40,7 +40,7 @@ const formSchema = z.object({
   feature: z.string().optional(),
   description: z.string().optional(),
   videoLink: z.string().optional().or(z.literal("")),
-  imgs: z.any().optional(),
+  imgs: z.array(z.string()).optional(),
   color: z.array(z.string()).optional(),
   size: z.array(z.string()).optional(),
   quantity: z.preprocess((val) => Number(val), z.number().min(0).optional()),
