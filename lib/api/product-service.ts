@@ -65,6 +65,30 @@ export const productService = {
     id: string,
     input: Partial<CreateProductInput>
   ): Promise<Product> => {
+    // If there are no new images to upload, send as JSON to avoid FormData string conversion issues
+    if (!input.imgs || input.imgs.length === 0) {
+      const payload = {
+        productName: input.productName,
+        price: input.price !== undefined ? Number(input.price) : undefined,
+        productType: input.productType,
+        feature: input.feature,
+        description: input.description,
+        videoLink: input.videoLink,
+        color: input.color,
+        size: input.size,
+        quantity:
+          input.quantity !== undefined ? Number(input.quantity) : undefined,
+        imgs: input.existingImgs, // Use existing images
+      };
+
+      const response = await axiosInstance.put<{
+        success: boolean;
+        data: Product;
+      }>(`/products/${id}`, payload);
+      return response.data.data;
+    }
+
+    // Otherwise use FormData for file uploads
     const formData = new FormData();
     if (input.productName) formData.append("productName", input.productName);
     if (input.price !== undefined) {

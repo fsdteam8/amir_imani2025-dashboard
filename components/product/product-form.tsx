@@ -117,6 +117,11 @@ export function ProductForm({
   };
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    // Filter out any undefined or empty strings from existingImages just in case
+    const cleanedExistingImages = existingImages.filter(
+      (url) => typeof url === "string" && url.trim() !== ""
+    );
+
     const input: CreateProductInput = {
       productName: values.productName,
       price: Number(values.price),
@@ -124,12 +129,13 @@ export function ProductForm({
       feature: values.feature,
       description: values.description,
       videoLink: values.videoLink,
-      color: values.color,
-      size: values.size,
+      color: Array.isArray(values.color) ? values.color : [],
+      size: Array.isArray(values.size) ? values.size : [],
       quantity:
         values.quantity !== undefined ? Number(values.quantity) : undefined,
       imgs: images.length > 0 ? images : undefined,
-      existingImgs: existingImages.length > 0 ? existingImages : undefined,
+      existingImgs:
+        cleanedExistingImages.length > 0 ? cleanedExistingImages : undefined,
     };
     onSubmit(input);
   };
