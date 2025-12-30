@@ -43,7 +43,8 @@ export const productService = {
     if (input.quantity !== undefined)
       formData.append("quantity", input.quantity.toString());
 
-    if (input.imgs && input.imgs.length > 0) {
+    // Only append imgs if array has items
+    if (input.imgs && Array.isArray(input.imgs) && input.imgs.length > 0) {
       input.imgs.forEach((file) => {
         formData.append("imgs", file);
       });
@@ -78,7 +79,10 @@ export const productService = {
         size: input.size,
         quantity:
           input.quantity !== undefined ? Number(input.quantity) : undefined,
-        imgs: input.existingImgs || [], // Ensure imgs is always an array
+        imgs:
+          Array.isArray(input.existingImgs) && input.existingImgs.length > 0
+            ? input.existingImgs
+            : [], // Ensure imgs is always an array
       };
 
       const response = await axiosInstance.put<{
@@ -120,12 +124,12 @@ export const productService = {
     // CONSISTENCY: Send both existing URLs and new files under the 'imgs' field.
     // The backend FilesInterceptor will pull the files, and the body will contain the strings.
     if (input.existingImgs && input.existingImgs.length > 0) {
-      input.existingImgs.forEach((url) => formData.append("imgs", url));
+      input.existingImgs.forEach((url) => formData.append("imgs[]", url));
     }
 
     if (input.imgs && input.imgs.length > 0) {
       input.imgs.forEach((file) => {
-        formData.append("imgs", file);
+        formData.append("imgs", file); // Multer looks for 'imgs' for files
       });
     }
 

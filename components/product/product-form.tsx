@@ -133,9 +133,11 @@ export function ProductForm({
       size: Array.isArray(values.size) ? values.size : [],
       quantity:
         values.quantity !== undefined ? Number(values.quantity) : undefined,
-      imgs: images.length > 0 ? images : undefined,
+      // Always send imgs as an array, even if empty
+      imgs: images.length > 0 ? images : [],
+      // Always send existingImgs as an array, even if empty
       existingImgs:
-        cleanedExistingImages.length > 0 ? cleanedExistingImages : undefined,
+        cleanedExistingImages.length > 0 ? cleanedExistingImages : [],
     };
     onSubmit(input);
   };

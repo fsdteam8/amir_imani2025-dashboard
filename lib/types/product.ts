@@ -29,8 +29,8 @@ export interface CreateProductInput {
   feature?: string;
   description?: string;
   videoLink?: string;
-  imgs?: File[];
-  existingImgs?: string[]; // URLs of existing images to keep
+  imgs: File[]; // Always an array, can be empty
+  existingImgs: string[]; // Always an array of URLs, can be empty
   color?: string[];
   size?: string[];
   quantity?: number;
