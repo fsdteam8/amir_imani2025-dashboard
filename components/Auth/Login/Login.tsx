@@ -74,7 +74,7 @@ export default function Login() {
         Welcome
       </h2>
       <p className="text-gray-500 mb-6 text-center">
-        Access your account to manage tours, leads, and listings
+        Access your account to manage QR codes, Products, and Blogs.
       </p>
 
       <Form {...form}>
@@ -91,7 +91,7 @@ export default function Login() {
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="hello@example.com"
+                    placeholder="Enter your email address here"
                     className="h-12"
                     {...field}
                   />
