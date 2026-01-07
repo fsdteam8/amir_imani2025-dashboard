@@ -1,10 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LogOut, Menu } from "lucide-react";
+import { LogOut, Menu, QrCode, Store, BookOpen } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Drawer } from "vaul";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface MobileSidebarProps {
   onLogout?: () => void;
@@ -12,6 +15,7 @@ interface MobileSidebarProps {
 
 export function MobileSidebar({ onLogout }: MobileSidebarProps) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <Drawer.Root open={open} onOpenChange={setOpen} direction="left">
@@ -35,30 +39,86 @@ export function MobileSidebar({ onLogout }: MobileSidebarProps) {
           </div>
 
           <nav className="flex-1 px-3 py-6 space-y-2">
-            <div
-              className="px-3 py-2 rounded-sm bg-foreground backdrop-blur-sm flex items-center justify-between cursor-pointer"
+            {/* QR Codes */}
+            <Link
+              href="/"
+              className={cn(
+                "px-3 py-2 rounded-sm flex items-center justify-between cursor-pointer transition-colors",
+                pathname === "/"
+                  ? "bg-foreground backdrop-blur-sm text-white"
+                  : "text-foreground hover:bg-white/10"
+              )}
               onClick={() => setOpen(false)}
             >
-              {/* Nav item  */}
-              <div className="flex items-center gap-2 ">
+              <div className="flex items-center gap-2">
+                <QrCode className="w-5 h-5" aria-hidden="true" />
+                <p className="text-sm font-medium font-heading">QR Codes</p>
+              </div>
+              {pathname === "/" && (
                 <Image
-                  src="/assets/qrcode-icon.svg"
-                  alt="QR Code Icon"
+                  src="/assets/sidebar-sparkle.svg"
+                  alt=""
                   width={24}
                   height={24}
                   className="w-6 h-6"
+                  aria-hidden="true"
                 />
-                <p className="text-sm font-medium font-heading">QR Codes</p>
-              </div>
+              )}
+            </Link>
 
-              <Image
-                src="/assets/sidebar-sparkle.svg"
-                alt="Sparkle"
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
-            </div>
+            {/* Products */}
+            <Link
+              href="/products"
+              className={cn(
+                "px-3 py-2 rounded-sm flex items-center justify-between cursor-pointer transition-colors",
+                pathname.startsWith("/products")
+                  ? "bg-foreground backdrop-blur-sm text-white"
+                  : "text-foreground hover:bg-white/10"
+              )}
+              onClick={() => setOpen(false)}
+            >
+              <div className="flex items-center gap-2">
+                <Store className="w-5 h-5" aria-hidden="true" />
+                <p className="text-sm font-medium font-heading">Products</p>
+              </div>
+              {pathname.startsWith("/products") && (
+                <Image
+                  src="/assets/sidebar-sparkle.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                  aria-hidden="true"
+                />
+              )}
+            </Link>
+
+            {/* Blogs */}
+            <Link
+              href="/blogs"
+              className={cn(
+                "px-3 py-2 rounded-sm flex items-center justify-between cursor-pointer transition-colors",
+                pathname.startsWith("/blogs")
+                  ? "bg-foreground backdrop-blur-sm text-white"
+                  : "text-foreground hover:bg-white/10"
+              )}
+              onClick={() => setOpen(false)}
+            >
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-5 h-5" aria-hidden="true" />
+                <p className="text-sm font-medium font-heading">Blogs</p>
+              </div>
+              {pathname.startsWith("/blogs") && (
+                <Image
+                  src="/assets/sidebar-sparkle.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                  aria-hidden="true"
+                />
+              )}
+            </Link>
           </nav>
 
           <div className="p-6 border-t border-[#D4A13D]/20">

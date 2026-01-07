@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { BlogForm } from "@/components/blog/blog-form";
 import { useBlog } from "@/lib/hooks/use-blog";
