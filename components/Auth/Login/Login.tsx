@@ -91,7 +91,7 @@ export default function Login() {
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="Enter your email address here"
+                    placeholder="Enter your email address here ..."
                     className="h-12"
                     {...field}
                   />
